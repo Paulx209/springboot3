@@ -1,5 +1,7 @@
 package com.getian.springboot3;
 
+import com.getian.springboot3.entity.User;
+import com.getian.springboot3.service.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -17,8 +19,11 @@ public class Springboot3Application {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(Springboot3Application.class, args);
-        Object bean = context.getBean("sqlSessionFactory");
-        System.out.println(bean);
+        User user = (User) context.getBean("user");
+        System.out.println(user.getName());
+        context.close();
+//        UserService userService = (UserService) context.getBean("userService");
+//        userService.save();
     }
 
 }

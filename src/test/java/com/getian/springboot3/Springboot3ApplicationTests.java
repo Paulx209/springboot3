@@ -1,5 +1,6 @@
 package com.getian.springboot3;
 
+import com.getian.springboot3.entity.User;
 import com.getian.springboot3.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,12 @@ class Springboot3ApplicationTests {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private User user;
+
     @Test
     void contextLoads() {
-        userService.save();
+        System.out.println(user.getName());
     }
 
 }
