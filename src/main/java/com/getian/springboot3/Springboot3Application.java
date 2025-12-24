@@ -1,15 +1,20 @@
 package com.getian.springboot3;
 
+import com.getian.springboot3.entity.Student;
 import com.getian.springboot3.entity.User;
 import com.getian.springboot3.service.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Date;
 
 @SpringBootApplication
+@ConfigurationPropertiesScan(basePackages = {"com.getian.springboot3.entity"})
+//@EnableConfigurationProperties(value = {Student.class})
 public class Springboot3Application {
 
     @Bean
