@@ -25,7 +25,7 @@ class Springboot3ApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println(group);
+        userService.save();
     }
 
 }
