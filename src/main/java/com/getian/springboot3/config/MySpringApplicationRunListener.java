@@ -43,18 +43,6 @@ public class MySpringApplicationRunListener implements SpringApplicationRunListe
                 String[] propertyNames = ((EnumerablePropertySource<?>) source).getPropertyNames();
                 if(propertyNames.length == 11){
                     System.out.println(((EnumerablePropertySource<?>) source).getProperty("my.name"));
-                    try {
-                        Field field = application.getClass().getDeclaredField("bannerMode");
-                        field.setAccessible(true);
-                        Object bannerMode = field.get(application);
-                        System.out.println("判断prepareEnvironment#bindToSpringApplication(environment)方法是否会将配置文件中的配置项更新到SpringApplictaion上面");
-                        System.out.println("SpringApplication中bannerMode属性:" + bannerMode);
-                    } catch (NoSuchFieldException e) {
-                        throw new RuntimeException(e);
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
-
                 }
                 System.out.println("   └─ 包含 Key 数量: " + propertyNames.length);
             }
@@ -70,6 +58,17 @@ public class MySpringApplicationRunListener implements SpringApplicationRunListe
 
     @Override
     public void contextPrepared(ConfigurableApplicationContext context) {
+        try {
+            Field field = application.getClass().getDeclaredField("bannerMode");
+            field.setAccessible(true);
+            Object bannerMode = field.get(application);
+            System.out.println("判断prepareEnvironment#bindToSpringApplication(environment)方法是否会将配置文件中的配置项更新到SpringApplictaion上面");
+            System.out.println("SpringApplication中bannerMode属性:" + bannerMode);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println(">>> [4. Starting] MySpringApplicationRunListener ---- contextPrepared ");
     }
 
