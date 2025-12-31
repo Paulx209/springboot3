@@ -10,13 +10,18 @@ import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 
+import java.lang.reflect.Field;
 import java.time.Duration;
 import java.util.Iterator;
 import java.util.Set;
 
 public class MySpringApplicationRunListener implements SpringApplicationRunListener {
+    private SpringApplication application;
+    private String[] args;
 
     public MySpringApplicationRunListener(SpringApplication application, String[] args) {
+        this.application = application;
+        this.args = args;
         Set<ApplicationListener<?>> listeners = application.getListeners();
         System.out.println("此时注入的监听器数量为:" + listeners.size());
         System.out.println(">>> [1. 构造阶段] MyDemoRunListener 实例化成功！");
@@ -36,8 +41,20 @@ public class MySpringApplicationRunListener implements SpringApplicationRunListe
                     index++, source.getName(), source.getClass().getSimpleName());
             if (source instanceof EnumerablePropertySource) {
                 String[] propertyNames = ((EnumerablePropertySource<?>) source).getPropertyNames();
-                if(propertyNames.length == 10){
+                if(propertyNames.length == 11){
                     System.out.println(((EnumerablePropertySource<?>) source).getProperty("my.name"));
+                    try {
+                        Field field = application.getClass().getDeclaredField("bannerMode");
+                        field.setAccessible(true);
+                        Object bannerMode = field.get(application);
+                        System.out.println("判断prepareEnvironment#bindToSpringApplication(environment)方法是否会将配置文件中的配置项更新到SpringApplictaion上面");
+                        System.out.println("SpringApplication中bannerMode属性:" + bannerMode);
+                    } catch (NoSuchFieldException e) {
+                        throw new RuntimeException(e);
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+
                 }
                 System.out.println("   └─ 包含 Key 数量: " + propertyNames.length);
             }
@@ -48,6 +65,7 @@ public class MySpringApplicationRunListener implements SpringApplicationRunListe
             System.out.println(">>> 验证属性 [" + targetKey + "] = " + environment.getProperty(targetKey));
         }
         System.out.println(">>> [3. Starting] MySpringApplicationRunListener ---- environmentPrepared ");
+
     }
 
     @Override
