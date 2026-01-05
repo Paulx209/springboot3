@@ -12,7 +12,6 @@ import org.springframework.core.env.PropertySource;
 
 import java.lang.reflect.Field;
 import java.time.Duration;
-import java.util.Iterator;
 import java.util.Set;
 
 public class MySpringApplicationRunListener implements SpringApplicationRunListener {
@@ -30,6 +29,21 @@ public class MySpringApplicationRunListener implements SpringApplicationRunListe
     @Override
     public void starting(ConfigurableBootstrapContext bootstrapContext) {
         System.out.println(">>> [2. Starting] MySpringApplicationRunListener ---- starting ");
+        //抛出异常，通过堆栈信息获取到当前main方法所在的类
+//        RuntimeException exception = new RuntimeException();
+//        StackTraceElement[] stackTrace = exception.getStackTrace();
+//        StackTraceElement[] var2 = stackTrace;
+//        int length = stackTrace.length;
+//        for(int i = 0; i < length; i++){
+//            StackTraceElement element = var2[i];
+//            if("main".equals(element.getMethodName())){
+//                try {
+//                    System.out.println(Class.forName(element.getClassName()));
+//                } catch (ClassNotFoundException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        }
     }
 
     @Override
